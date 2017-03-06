@@ -55,6 +55,11 @@ function ass_admin_menu() {
 		$title = __( 'Group Email Options', 'buddypress-group-email-subscription' );
 	}
 
+	/* XTEC ************ AFEGIT - */
+	/* 2017.03.06 @xaviernietosanchez */
+	if( is_xtec_super_admin() ){
+	/* ************ FI */
+
 	add_submenu_page(
 		$settings_page,
 		$title,
@@ -63,6 +68,12 @@ function ass_admin_menu() {
 		'ass_admin_options',
 		'ass_admin_options'
 	);
+
+	/* XTEC ************ AFEGIT - */
+	/* 2017.03.06 @xaviernietosanchez */
+	}
+	/* ************ FI */
+
 }
 add_action( 'admin_menu', 'ass_admin_menu' );
 add_action( 'network_admin_menu', 'ass_admin_menu' );
@@ -189,6 +200,53 @@ function ass_admin_options() {
 	?>
 	<div class="wrap">
 		<h2><?php _e('Group Email Subscription Settings', 'buddypress-group-email-subscription'); ?></h2>
+
+		<?php if ( $is_legacy_installation ) : ?>
+			<div class="bpges-migration-tools">
+				<h3><?php esc_html_e( 'Migration Status', 'buddypress-group-email-subscription' ); ?></h3>
+				<p><?php esc_html_e( 'BuddyPress Group Email Subscription version 3.9 includes a number of important database migration routines.', 'buddypress-group-email-subscription' ); ?></p>
+
+				<ol>
+					<li class="bpges-migration-step <?php echo esc_attr( $table_class ); ?>"><?php esc_html_e( 'Create database tables', 'buddypress-group-email-subscription' ); ?> <?php if ( $table_message ) : ?><em> - <?php echo esc_html( $table_message ); ?></em><?php endif; ?></li>
+					<li class="bpges-migration-step <?php echo esc_attr( $subs_class ); ?>"><?php esc_html_e( 'Migrate subscriptions', 'buddypress-group-email-subscription' ); ?> <?php if ( $subs_message ) : ?><em> - <?php echo esc_html( $subs_message ); ?></em><?php endif; ?></li>
+					<li class="bpges-migration-step <?php echo esc_attr( $queued_class ); ?>"><?php esc_html_e( 'Migrate queued items', 'buddypress-group-email-subscription' ); ?> <?php if ( $queued_message ) : ?><em> - <?php echo esc_html( $queued_message ); ?></em><?php endif; ?></li>
+				</ol>
+
+				<?php
+				$fix_link = bpges_get_admin_panel_url();
+				$fix_link = add_query_arg( 'action', 'migrate_39', $fix_link );
+				$fix_link = wp_nonce_url( $fix_link, 'bpges_migrate_39' );
+				?>
+
+				<?php if ( ! $status['subscription_migration_in_progress'] && ! $status['queued_items_migration_in_progress'] ) : ?>
+					<p><?php esc_html_e( 'If you need to re-run or restart the migration process, you can do so with the following link:', 'buddypress-group-email-subscription' ); ?> <a href="<?php echo esc_url( $fix_link ); ?>">Manually trigger the migration process.</a></p>
+				<?php else : ?>
+					<p><?php esc_html_e( 'Some migrations are currently in progress. Please reload this page in a few moments.', 'buddypress-group-email-subscription' ); ?></p>
+				<?php endif; ?>
+
+				<p><a href="https://github.com/boonebgorges/buddypress-group-email-subscription/wiki/Migrating-to-3.9.0"><?php esc_html_e( 'Learn more about the 3.9 migration process.', 'buddypress-group-email-subscription' ); ?></a></p>
+
+				<style type="text/css">
+					.bpges-migration-step:before {
+						font-family: "dashicons";
+						font-size: 2em;
+						margin-left: 8px;
+						vertical-align: middle;
+					}
+					.bpges-migration-step-success:before {
+						color: green;
+						content: "\f147";
+					}
+					.bpges-migration-step-failure:before {
+						color: red;
+						content: "\f158";
+					}
+					.bpges-migration-step-in-progress:before {
+						content: "\f469";
+					}
+				</style>
+			</div>
+		<?php endif; ?>
 
 		<form id="ass-admin-settings-form" method="post" action="admin.php?page=ass_admin_options">
 		<?php wp_nonce_field( 'ass_admin_settings' ); ?>
@@ -339,6 +397,14 @@ function ass_admin_options() {
 			</div>
 		<?php endif; ?>
 
+		<!--
+		// XTEC ************ AFEGIT - Hidden donate box.
+		// 2017.03.06 @xaviernietosanchez
+		-->
+		<?php if( is_xtec_super_admin() ){ ?>
+		<!--
+		// ************ FI
+		-->
 
 		<hr>
 		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
@@ -348,6 +414,15 @@ function ass_admin_options() {
 		<input type="hidden" name="hosted_button_id" value="PXD76LU2VQ5AS">
 		<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 		<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+
+		<!--
+		// XTEC ************ AFEGIT - Hidden donate box.
+		// 2017.03.06 @xaviernietosanchez
+		-->
+		<?php } ?>
+		<!--
+		// ************ FI
+		-->
 
 	</div>
 	<?php
@@ -393,6 +468,7 @@ function ass_update_dashboard_settings() {
 	}
 
 	return true;
+	//echo '<pre>'; print_r( $_POST ); echo '</pre>';
 }
 
 /**
