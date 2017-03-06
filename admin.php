@@ -56,6 +56,11 @@ function ass_admin_menu() {
 		$title         = __( 'Group Email Options', 'buddypress-group-email-subscription' );
 	}
 
+	/* XTEC ************ AFEGIT - */
+	/* 2017.03.06 @xaviernietosanchez */
+	if( is_xtec_super_admin() ){
+	/* ************ FI */
+
 	add_submenu_page(
 		$settings_page,
 		$title,
@@ -64,6 +69,12 @@ function ass_admin_menu() {
 		'ass_admin_options',
 		'ass_admin_options'
 	);
+
+	/* XTEC ************ AFEGIT - */
+	/* 2017.03.06 @xaviernietosanchez */
+	}
+	/* ************ FI */
+
 }
 add_action( 'admin_menu', 'ass_admin_menu' );
 add_action( 'network_admin_menu', 'ass_admin_menu' );
@@ -411,6 +422,15 @@ function ass_admin_options() {
 		<?php endif; ?>
 
 
+		<!--
+		// XTEC ************ AFEGIT - Hidden donate box.
+		// 2017.03.06 @xaviernietosanchez
+		-->
+		<?php if( is_xtec_super_admin() ){ ?>
+		<!--
+		// ************ FI
+		-->
+
 		<hr>
 		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 			<a href="https://wordpress.org/plugins/buddypress-group-email-subscription" target="_blank"><?php esc_html_e( 'If you enjoy using this plugin, please rate it.', 'buddypress-group-email-subscription' ); ?></a><br>
@@ -420,6 +440,15 @@ function ass_admin_options() {
 			<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 			<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 		</form>
+
+		<!--
+		// XTEC ************ AFEGIT - Hidden donate box.
+		// 2017.03.06 @xaviernietosanchez
+		-->
+		<?php } ?>
+		<!--
+		// ************ FI
+		-->
 
 	</div>
 	<?php
