@@ -798,10 +798,16 @@ function ass_send_email( $email_type, $to, $args ) {
 		// Remove BP's restrictive HTML filtering.
 		remove_filter( 'bp_email_set_content_html', 'wp_filter_post_kses', 6 );
 
+//XTEC ************ ELIMINAT - Keep the html code and solved encoding problems
+//2017.11.29  @nacho
+//************ ORIGINAL
+/*
 		// Remove BP's plain-text filter and convert the HTML email content to Markdown.
 		remove_filter( 'bp_email_set_content_plaintext', 'wp_strip_all_tags', 6 );
 		add_filter( 'bp_email_get_property', 'ass_email_strip_trailing_breaklines', 1, 3 );
 		add_filter( 'bp_email_get_property', 'ass_email_convert_html_to_plaintext', 20, 3 );
+*/
+//************ FI
 
 		// Remove default BP email footer.
 		add_action( 'bp_before_email_footer', 'ob_start', 999, 0 );
