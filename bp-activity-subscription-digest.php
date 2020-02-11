@@ -518,10 +518,21 @@ function ass_digest_format_item( $item, $type ) {
 		$action_split = explode( ' in the group', ass_clean_subject_html( $item->action ) );
 	}
 
-	if ( $action_split[1] )
+    //XTEC ************ Modificat - Check if $action_split exists
+    //2020.02.10  @nacho
+    if ( isset($action_split[1]) ) {
+        $action = $action_split[0];
+    } else {
+        $action = $item->action;
+    }
+    //************ ORIGINAL
+    /*
+    if ( $action_split[1] )
 		$action = $action_split[0];
 	else
 		$action = $item->action;
+    */
+    //************ FI
 
 	$action = ass_digest_filter( $action );
 
@@ -888,34 +899,13 @@ function ass_get_mass_userdata( $user_ids = array() ) {
 /**
  * Get user domain.
  *
- * Do not use this outside of digests!
+ * Previously, this was a cached version of the bp_core_get_user_domain() check.
+ * Since 3.9.0, it's a wrapper for that function.
  *
- * This is almost a duplicate of bp_core_get_user_domain(), but references
- * our already-fetched mass-userdata array to avoid pinging the DB over and
- * over again in a foreach loop.
+ * @param int $user_id
  */
 function ass_digest_get_user_domain( $user_id ) {
-	global $bp;
-
-	if ( empty( $bp->ass->massdata ) )
-		return false;
-
-	$mass_userdata = $bp->ass->massdata;
-
-	$username = bp_is_username_compatibility_mode() ? $mass_userdata[ $user_id ]['user_login'] : $mass_userdata[ $user_id ]['user_nicename'];
-
-	if ( bp_core_enable_root_profiles() ) {
-		$after_domain = $username;
-	} else {
-		$after_domain =  bp_get_members_root_slug() . '/';
-		$after_domain .= bp_is_username_compatibility_mode() ? rawurlencode( $username ) : $username;
-	}
-
-	$domain = trailingslashit( bp_get_root_domain() . '/' . $after_domain );
-
-	$domain = apply_filters( 'bp_core_get_user_domain_pre_cache', $domain, $user_id, $mass_userdata[ $user_id ]['user_nicename'], $mass_userdata[ $user_id ]['user_login'] );
-
-	return apply_filters( 'bp_core_get_user_domain', $domain, $user_id, $mass_userdata[ $user_id ]['user_nicename'], $mass_userdata[ $user_id ]['user_login'] );
+	return bp_core_get_user_domain( $user_id );
 }
 
 // if the WP_Better_Emails plugin is installed, don't wrap the message with <html><body>$message</body></html>
