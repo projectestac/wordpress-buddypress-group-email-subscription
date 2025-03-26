@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'boonebgorges/buddypress-group-email-subscription',
-        'pretty_version' => '4.0.0',
-        'version' => '4.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => '4.2.1',
+        'version' => '4.2.1.0',
+        'reference' => null,
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'boonebgorges/buddypress-group-email-subscription' => array(
-            'pretty_version' => '4.0.0',
-            'version' => '4.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => '4.2.1',
+            'version' => '4.2.1.0',
+            'reference' => null,
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -29,14 +29,12 @@
             'dev_requirement' => false,
         ),
         'hard-g/buddypress-12.0-url-polyfills' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '4796efdbf4be3f790efb89006f1e4ddaf4ffd0db',
+            'pretty_version' => '1.0.2',
+            'version' => '1.0.2.0',
+            'reference' => 'b09dc593f40c5b7163c1126377d991be62f0a9cf',
             'type' => 'library',
             'install_path' => __DIR__ . '/../hard-g/buddypress-12.0-url-polyfills',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
+            'aliases' => array(),
             'dev_requirement' => false,
         ),
         'roundcube/plugin-installer' => array(

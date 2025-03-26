@@ -4,8 +4,8 @@ Description: Allow users to receive email notifications of group activity. Weekl
 Tags: buddypress, bp, activities, activity, groups, group, emails, email, notifications, notification, subscribe, subscription, digest, summary
 Requires at least: 3.2
 Requires PHP: 5.3
-Tested up to: 6.4
-Stable tag: 4.2.0
+Tested up to: 6.6
+Stable tag: 4.2.4
 
 == Description ==
 
@@ -92,6 +92,22 @@ For bug reports or to add patches or translation files, please visit the [GES Gi
 7. Admin Settings
 
 == Changelog ==
+
+= 4.2.4 =
+* Fix regression in 4.2.3 that caused certain tokens not to be replaced in Welcome emails.
+
+= 4.2.3 =
+* Security hardening
+* Internal code improvements, including localization and accessibility improvements
+* New filter for content sent to `wp_mail()`.
+
+= 4.2.2 =
+* Update BP 12.0 polyfills library for improved compatibility with older versions of BP and old forks.
+* Fix URL construction bug that caused the 'change all members' subscription level' link to be broken in some cases.
+* Improve encoding of characters in notification emails.
+
+= 4.2.1 =
+* Update BP 12.0 polyfills to fix some redirect issues.
 
 = 4.2.0 =
 * Compatibility with BuddyPress 12.0+ and its new system for building URLs using WP's Rewrites API.
